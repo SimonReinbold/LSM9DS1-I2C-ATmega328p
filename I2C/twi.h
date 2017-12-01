@@ -11,7 +11,6 @@
 
 // General Settings
 
-#define F_CPU 16000000UL
 #define F_SCL 100000UL
 #define MAX_PAYLOAD 10
 
@@ -19,7 +18,7 @@
 
 #define TWI_REG 	DDRC
 #define TWI_PORT 	PORTC
-#define TWI__SDA	PC4
+#define TWI_SDA		PC4
 #define TWI_SCL		PC5
 
 // Status Mask
@@ -30,6 +29,19 @@
 
 #define READ 		0x01
 #define WRITE 		0x00
+
+/*******************************
+*
+* Error Flags
+*
+********************************/
+
+#define OK_FLG 						255
+#define M_ARBITRATION_LOST_FLG		1
+#define M_SLAW_NACK_RECEIVED_FLG	2
+#define M_DATA_NACK_RECEIVED_FLG	3
+#define M_SLAR_NACK_RECEIVED_FLG	4
+#define OTHER_FLG					5
 
 /*******************************
 *
@@ -90,15 +102,17 @@
 *
 ********************************/
 
-extern struct{
-	uint8_t ready;
-	uint8_t is_reading;
+#define STAT_READY 0
+#define STAT_IS_READING 1
+
+volatile struct{
+	uint8_t status;
 	uint8_t byte_cnt;
 	uint8_t payload_length;
 }twi_control;
 
-extern uint8_t error = 0;
-extern uint8_t payload[MAX_PAYLOAD];
+uint8_t payload[MAX_PAYLOAD];
+volatile uint8_t error_FLG;
 
 /*******************************
 *
@@ -107,13 +121,13 @@ extern uint8_t payload[MAX_PAYLOAD];
 ********************************/
 
 void init_twi();
-void send_START();
-void send_STOP();
-void send_NMACK();
-void transmit_read(uint8_t address, uint8_t nbytes_to_receive);
-void transmit_write(uint8_t address);
-void transmit_data(uint8_t data);
-void send_data(uint8_t *msg, uint8_t msgSize);
+uint8_t send_START();
+uint8_t send_STOP();
+uint8_t transmit_read(uint8_t address, uint8_t nbytes_to_receive);
+uint8_t transmit_write(uint8_t address);
+uint8_t transmit_data(uint8_t data);
+uint8_t send_data(uint8_t *msg, uint8_t msgSize);
 uint8_t wait_until_ready();
+uint8_t master_read_register(uint8_t slave_address, uint8_t register_address, uint8_t nbytes);
 
 #endif /* _TWI_ */

@@ -40,7 +40,7 @@
 #define INT_GEN_SRC_G 		0x14
 #define OUT_TEMP_L 			0x15
 #define OUT_TEMP_H 			0x16
-#define STATUS_REG 			0x17
+#define STATUS_REG1 			0x17
 #define OUT_X_L_G 			0x18
 #define OUT_X_H_G 			0x19
 #define OUT_Y_L_G 			0x1A
@@ -55,7 +55,7 @@
 #define CTRL_REG9 			0x23
 #define CTRL_REG10 			0x24
 #define INT_GEN_SRC_XL 		0x26
-#define STATUS_REG 			0x27
+#define STATUS_REG2 			0x27
 #define OUT_X_L_XL 			0x28
 #define OUT_X_H_XL 			0x29
 #define OUT_Y_L_XL 			0x2A
@@ -81,7 +81,7 @@
 #define OFFSET_Y_REG_H_M 	0x08
 #define OFFSET_Z_REG_L_M 	0x09
 #define OFFSET_Z_REG_H_M 	0x0A
-#define WHO_AM_I_M 			0x0F
+#define WHO_AM_I			0x0F
 #define CTRL_REG1_M 		0x20
 #define CTRL_REG2_M 		0x21
 #define CTRL_REG3_M 		0x22
