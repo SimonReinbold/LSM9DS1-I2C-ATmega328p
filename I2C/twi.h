@@ -1,8 +1,8 @@
 /***************************************************************
 *
-* TWI Hardware definitions for Atmel ATmega328p
+* I2C - Two Wire Interface (TWI) Hardware Definition for ATMEGA328P
 * Author: Simon Reinbold
-* Last Update: 22.10.2017
+* Last Update: 26.03.2018
 *
 ***************************************************************/
 
@@ -12,7 +12,7 @@
 // General Settings
 
 #define F_SCL 100000UL
-#define MAX_PAYLOAD 10
+#define MAX_PAYLOAD 12
 
 // Pin Configuration
 
@@ -129,5 +129,7 @@ uint8_t transmit_data(uint8_t data);
 uint8_t send_data(uint8_t *msg, uint8_t msgSize);
 uint8_t wait_until_ready();
 uint8_t master_read_register(uint8_t slave_address, uint8_t register_address, uint8_t nbytes);
+uint8_t master_config_register(uint8_t slave_address, uint8_t register_address, uint8_t data);
+uint8_t master_write_register(uint8_t slave_address, uint8_t register_address, uint8_t *data, uint8_t nbytes);
 
 #endif /* _TWI_ */

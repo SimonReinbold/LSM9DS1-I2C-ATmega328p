@@ -2,12 +2,72 @@
 *
 * Definition header for LSM9DS1 chip on Sparkfun 9DOF Stick Module
 * Author: Simon Reinbold
-* Last Update: 22.10.2017
+* Last Update: 26.03.2018
 *
 ***************************************************************/
 
 #ifndef _LSM9DS1_
 #define _LSM9DS1_
+
+/*******************************
+*
+* Config Parameter
+*
+********************************/
+
+// GYRO parameters
+
+#define CTRL_REG1_G_POWER_DOWN			0x00
+#define CTRL_REG1_G_DATA_RATE_14_9_HZ	0x20
+#define CTRL_REG1_G_DATA_RATE_59_5_HZ	0x40
+#define CTRL_REG1_G_DATA_RATE_119_HZ	0x60
+#define CTRL_REG1_G_DATA_RATE_238_HZ	0x80
+#define CTRL_REG1_G_DATA_RATE_476_HZ	0xA0
+#define CTRL_REG1_G_DATA_RATE_952_HZ	0xC0
+
+#define CTRL_REG1_G_SCALE_245_DPS		0x00
+#define CTRL_REG1_G_SCALE_500_DPS		0x08
+#define CTRL_REG1_G_SCALE_2000_DPS		0x18
+
+#define CTRL_REG1_G_BW					0x00
+
+#define CTRL_REG3_G_LOW_POWER_ENABLE	0x80
+
+// ACCELEROMETER parameters
+
+#define CTRL_REG6_XL_POWER_DOWN			0x00
+#define CTRL_REG6_XL_DATA_RATE_10_HZ	0x20
+#define CTRL_REG6_XL_DATA_RATE_50_HZ	0x40
+#define CTRL_REG6_XL_DATA_RATE_119_HZ	0x60
+#define CTRL_REG6_XL_DATA_RATE_238_HZ	0x80
+#define CTRL_REG6_XL_DATA_RATE_476_HZ	0xA0
+#define CTRL_REG6_XL_DATA_RATE_952_HZ	0xC0
+
+#define CTRL_REG6_XL_SCALE_2_G			0x00
+#define CTRL_REG6_XL_SCALE_4_G			0x10
+#define CTRL_REG6_XL_SCALE_8_G			0x18
+#define CTRL_REG6_XL_SCALE_16_G			0x08
+// Bandwidth auto select set automatically
+
+/*******************************
+*
+* Flags
+*
+********************************/
+
+#define SENSOR_ERROR					0xFF
+#define SENSOR_OK						0x00
+
+/*******************************
+*
+* Function List
+*
+********************************/
+
+uint8_t setup_LSM9DS1();
+uint8_t setup_acceleration_sensor();
+uint8_t setup_gyro_sensor();
+uint8_t get_acc_and_gyro_data();
 
 // Addresses
 

@@ -1,4 +1,15 @@
 *.o
+
 *.hex
+
 *.elf
-4bit-LCD/
+
+*.atsln
+*.cproj
+*.xml
+I2C/Debug
+LCD/Debug
+testIMU/Debug
+USART/Debug
+.*
+!/.gitignore

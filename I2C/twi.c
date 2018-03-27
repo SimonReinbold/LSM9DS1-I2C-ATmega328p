@@ -1,6 +1,13 @@
+/***************************************************************
+*
+* I2C - Two Wire Interface (TWI) Protocol
+* Author: Simon Reinbold
+* Last Update: 26.03.2018
+*
+***************************************************************/
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include "../4bit-LCD/lcd-routines.h"
 #include <util/delay.h>
 #include "twi.h"
 
@@ -63,6 +70,7 @@ uint8_t send_data(uint8_t *msg, uint8_t msgSize){
 		if(transmit_data(*msg) != OK_FLG) return error_FLG;
 		msg++;
 	}
+	return OK_FLG;
 }
 
 uint8_t wait_until_ready(){
@@ -87,20 +95,31 @@ uint8_t master_read_register(uint8_t slave_address, uint8_t register_address, ui
 }
 
 uint8_t master_config_register(uint8_t slave_address, uint8_t register_address, uint8_t data){
-	uint8_t response;
-	send_START();
-	transmit_write(slave_address);
-	transmit_data(register_address);
-	transmit_data(data);
-	send_STOP();
+	if(send_START() != OK_FLG) return error_FLG;
+	_delay_us(100);
+	if(transmit_write(slave_address) != OK_FLG) return error_FLG;
+	_delay_us(100);
+	if(transmit_data(register_address) != OK_FLG) return error_FLG;
+	_delay_us(100);
+	if(transmit_data(data) != OK_FLG) return error_FLG;
+	_delay_us(100);
+	if(send_STOP() != OK_FLG) return error_FLG;
+	_delay_us(100);
+	return OK_FLG;
 }
 
 uint8_t master_write_register(uint8_t slave_address, uint8_t register_address, uint8_t *data, uint8_t nbytes){
-	send_START();
-	transmit_write(slave_address);
-	transmit_data(register_address);
-	send_data(data,nbytes);
-	send_STOP();
+	if(send_START() != OK_FLG) return error_FLG;
+	_delay_us(100);
+	if(transmit_write(slave_address) != OK_FLG) return error_FLG;
+	_delay_us(100);
+	if(transmit_data(register_address) != OK_FLG) return error_FLG;
+	_delay_us(100);
+	if(send_data(data,nbytes) != OK_FLG) return error_FLG;
+	_delay_us(100);
+	if(send_STOP() != OK_FLG) return error_FLG;
+	_delay_us(100);
+	return OK_FLG;
 }
 
 /****************************
@@ -109,7 +128,7 @@ uint8_t master_write_register(uint8_t slave_address, uint8_t register_address, u
 
 ISR(TWI_vect){
 	uint8_t status = TWSR & STATUS_MASK; // Mask Status Flag to neglect Prescaler Value
-
+	
 	// Reset READY flag
 	twi_control.status |= (1<<STAT_READY);
 
