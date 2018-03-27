@@ -8,7 +8,7 @@
 *.cproj
 *.xml
 I2C/Debug
-LCD/Debug
+LCD
 testIMU/Debug
 USART/Debug
 .*
